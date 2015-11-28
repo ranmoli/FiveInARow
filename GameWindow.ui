@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="ChessBoard" name="frame">
+  <widget class="ChessBoard" name="chessboard">
    <property name="geometry">
     <rect>
      <x>10</x>

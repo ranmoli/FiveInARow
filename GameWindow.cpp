@@ -9,6 +9,7 @@ GameWindow::GameWindow(QWidget *parent) :
     setWindowTitle(tr("FiveInARow"));
     setStyleSheet("background-color:rgb(219,207,202)");
     setFixedSize(770,620);
+
 }
 
 GameWindow::~GameWindow()

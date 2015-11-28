@@ -2,6 +2,8 @@
 #define GAMEWINDOW_H
 
 #include <QDialog>
+#include"Rule.h"
+#include<QtCore>
 
 namespace Ui {
 class GameWindow;
@@ -17,6 +19,9 @@ public:
 
 private:
     Ui::GameWindow *ui;
+
+protected:
+    bool currentplayer;//true:is black false:is white
 };
 
 #endif // GAMEWINDOW_H

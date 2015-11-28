@@ -16,10 +16,6 @@ for(size_t row=0;row<rowgridnum;row++)//初始化位置管理器_location
     }
 }
 
-drawPiece(1,1,true);
-drawPiece(2,1,false);
-qDebug()<<isBlackPiece(1,1)<<" "<<isBlackPiece(2,2)<<" "<<isBlackPiece(3,3)<<" ";
-
 setFixedSize(_boardlength,_boardwidth);
 setStyleSheet("background-color:rgb(166,137,124)");
 
@@ -37,6 +33,7 @@ void ChessBoard::drawPiece(size_t row, size_t col, bool isBlack)
 void ChessBoard::cleanPiece(size_t row, size_t col)//need testing
 {
     _location[row][col].isLocated=false;
+    update();
 }
 
 void ChessBoard::cleanAllPeices()//need testing
@@ -48,6 +45,7 @@ void ChessBoard::cleanAllPeices()//need testing
             cleanPiece(row,col);
         }
     }
+    update();
 }
 
 bool ChessBoard::isLocatedPiece(size_t row, size_t col)
