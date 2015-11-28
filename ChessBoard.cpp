@@ -16,11 +16,48 @@ for(size_t row=0;row<rowgridnum;row++)//初始化位置管理器_location
     }
 }
 
+drawPiece(1,1,true);
+drawPiece(2,1,false);
+qDebug()<<isBlackPiece(1,1)<<" "<<isBlackPiece(2,2)<<" "<<isBlackPiece(3,3)<<" ";
 
 setFixedSize(_boardlength,_boardwidth);
 setStyleSheet("background-color:rgb(166,137,124)");
 
 update();
+}
+
+void ChessBoard::drawPiece(size_t row, size_t col, bool isBlack)
+{
+ _location[row][col].isLocated=true;
+ if(isBlack){_location[row][col].piece.setIsBlack(true);}
+ else{_location[row][col].piece.setIsBlack(false);}
+ update();
+}
+
+void ChessBoard::cleanPiece(size_t row, size_t col)//need testing
+{
+    _location[row][col].isLocated=false;
+}
+
+void ChessBoard::cleanAllPeices()//need testing
+{
+    for(size_t row=0;row<rowgridnum;row++)
+    {
+        for(size_t col=0;col<rowgridnum;col++)
+        {
+            cleanPiece(row,col);
+        }
+    }
+}
+
+bool ChessBoard::isLocatedPiece(size_t row, size_t col)
+{
+    return _location[row][col].isLocated;
+}
+
+bool ChessBoard::isBlackPiece(size_t row, size_t col)
+{
+    return _location[row][col].piece.isBlack();
 }
 
 void ChessBoard::paintEvent(QPaintEvent *event)
@@ -33,6 +70,24 @@ void ChessBoard::paintEvent(QPaintEvent *event)
     for(size_t i=0;i<rowgridnum;i++)//绘制横线
     {painter.drawLine(QPoint(_originalpoint.x(),_originalpoint.y()+i*_gridsidelength),
                       QPoint(_originalpoint.x()+_gridsidelength*(rowgridnum-1),_originalpoint.y()+i*_gridsidelength));
+    }
+
+    for(size_t row=0;row<rowgridnum;row++)//绘制棋子
+    {
+        for(size_t col=0;col<rowgridnum;col++)
+        {
+            if(_location[row][col].isLocated)
+            {
+                QPen pen;
+                if(_location[row][col].piece.isBlack())
+                {
+                    pen.setBrush(Qt::black);painter.setBrush(Qt::black);
+                }
+                else{pen.setBrush(Qt::white);painter.setBrush(Qt::white);}
+                painter.setPen(pen);
+                painter.drawEllipse(_location[row][col].point,_location[row][col].piece.radius(),_location[row][col].piece.radius());
+            }
+        }
     }
 }
 

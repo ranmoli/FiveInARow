@@ -4,10 +4,13 @@
 #include <QFrame>
 #include<QEvent>
 #include<QPainter>
+#include<QtCore>
 #include"Piece.h"
 
 extern const double pieceradius;//棋子半径
 const size_t rowgridnum =15;//每行格点数
+//棋盘大小网格数由以上两参数完全决定
+
 
 struct Location
 {
@@ -22,11 +25,11 @@ class ChessBoard : public QFrame//黑白棋棋盘
 public:
     explicit ChessBoard(QWidget *parent = 0);
 
-    void drawBoard();
-    void drawPiece(size_t row,size_t col,bool isBlack);
+    void drawPiece(size_t row,size_t col,bool isBlack);//不检查是否有子，使用前需先判断
     void cleanPiece(size_t row,size_t col);
     void cleanAllPeices();
-
+    bool isLocatedPiece(size_t row,size_t col);
+    bool isBlackPiece(size_t row,size_t col);//不检查是否有子，使用前需先判断
 protected:
     void paintEvent(QPaintEvent *event);
 

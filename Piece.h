@@ -1,7 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-const double pieceradius = 20;
+const double pieceradius = 20;//棋子最大半径不超过该半径
 
 class Piece//黑白棋子类
 {

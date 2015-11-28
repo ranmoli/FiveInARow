@@ -2,7 +2,7 @@
 
 Piece::Piece()
 {
-    _radius=pieceradius;
+    _radius=18;
     _isBlack=true;
 }
 
