@@ -23,6 +23,8 @@ private slots:
 
     void on_exitButton_clicked();
 
+    void on_PVEButton_clicked();
+
 private:
     Ui::MenuWindow *ui;
 };

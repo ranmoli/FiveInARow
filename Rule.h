@@ -2,7 +2,6 @@
 #define RULE_H
 #include"ChessBoard.h"
 
-#include<QDebug>
 
 class Rule
 {

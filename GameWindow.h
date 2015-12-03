@@ -2,7 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QDialog>
-#include"Rule.h"
+#include"Player.h"
 #include<QtCore>
 
 namespace Ui {
@@ -15,13 +15,17 @@ class GameWindow : public QDialog
 
 public:
     explicit GameWindow(QWidget *parent = 0);
+    GameWindow(QWidget *parent = 0,bool isPVP=true);
     ~GameWindow();
 
 private:
     Ui::GameWindow *ui;
 
-protected:
-    bool currentplayer;//true:is black false:is white
+private slots:
+
+
+    void on_restartButton_clicked();
+    void on_backButton_clicked();
 };
 
 #endif // GAMEWINDOW_H
