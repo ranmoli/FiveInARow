@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include<cstdint>
-#include"ChessBoard.h"
+
 struct loc
 {
     size_t row;

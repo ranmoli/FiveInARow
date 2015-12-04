@@ -8,6 +8,7 @@ _originalpoint=QPoint(pieceradius,pieceradius);
 _gridsidelength=pieceradius*2;
 _sidelength=_gridsidelength*(rowgridnum-1);
 
+_total=0;
 _currentplayer=true;//black
 
 for(size_t row=0;row<rowgridnum;row++)//初始化位置管理器_location
@@ -30,12 +31,18 @@ void ChessBoard::drawPiece(size_t row, size_t col, bool isBlack)
  _location[row][col].isLocated=true;
  if(isBlack){_location[row][col].piece.setIsBlack(true);}
  else{_location[row][col].piece.setIsBlack(false);}
+ _total++;
+
+ _AI.setLoc(row,col,isBlack);//AI
  update();
 }
 
 void ChessBoard::cleanPiece(size_t row, size_t col)//need testing
 {
     _location[row][col].isLocated=false;
+    _total--;
+
+    _AI.setLoc(row,col,2);//AI
     update();
 }
 
@@ -125,11 +132,55 @@ void ChessBoard::mousePressEvent(QMouseEvent *event)
         init();
         return;
     }
+    if(_total==rowgridnum*rowgridnum)
+    {
+        QMessageBox::information(this,tr("DRAWN GAME"),tr("DRAWN GAME"),QMessageBox::Ok);
+        init();
+        return;
+    }
     _currentplayer =!_currentplayer;
  }
  else
  {
-    //PVE condition
+    //PVE condition//悔棋功能也要分两类实现
+     //Player:
+     int row=static_cast<size_t>(event->y()/_gridsidelength),col=static_cast<size_t>(event->x()/_gridsidelength);
+     if(!isLocatedPiece(row,col))
+     {
+         drawPiece(row,col,true);//默认玩家先手持黑
+         update();
+     }
+     else{return;}
+     if(isFiveInARow(row,col))
+     {
+        QMessageBox::information(this,tr("BLACK WIN!"),tr("BLACK WIN!"),QMessageBox::Ok);
+        init();
+        return;
+     }
+     if(_total==rowgridnum*rowgridnum)
+     {
+         QMessageBox::information(this,tr("DRAWN GAME"),tr("DRAWN GAME"),QMessageBox::Ok);
+         init();
+         return;
+     }
+
+     //AI:
+     Loc tmp=_AI.analyse();
+     qDebug()<<tmp.row<<""<<tmp.col;//test
+     drawPiece(tmp.row,tmp.col,false);//默认AI后手持白
+     update();
+     if(isFiveInARow(tmp.row,tmp.col))
+     {
+        QMessageBox::information(this,tr("WHITE WIN!"),tr("WHITE WIN!"),QMessageBox::Ok);
+        init();
+        return;
+     }
+     if(_total==rowgridnum*rowgridnum)
+     {
+         QMessageBox::information(this,tr("DRAWN GAME"),tr("DRAWN GAME"),QMessageBox::Ok);
+         init();
+         return;
+     }
  }
 
 }
@@ -158,6 +209,7 @@ void ChessBoard::init()
 {
     cleanAllPeices();
     setCurrentplayer(true);
+    _AI.init();
 }
 
 bool ChessBoard::isFiveInARow(size_t row,size_t col)

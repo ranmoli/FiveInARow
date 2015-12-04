@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     GameWindow.cpp \
     ChessBoard.cpp \
     Piece.cpp \
-    Player.cpp
+    Player.cpp \
+    AI.cpp
 
 HEADERS  += MenuWindow.h \
     GameWindow.h \
     ChessBoard.h \
     Piece.h \
-    Player.h
+    Player.h \
+    AI.h
 
 FORMS    += MenuWindow.ui \
     GameWindow.ui

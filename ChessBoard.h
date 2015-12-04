@@ -9,7 +9,7 @@
 #include<QMessageBox>
 #include"Piece.h"
 #include"Player.h"
-
+#include"AI.h"
 
 
 extern const double pieceradius;//棋子半径
@@ -50,6 +50,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
+
 protected:
     double _boardlength,_boardwidth;//棋盘自身长宽
     QPoint _originalpoint;//栅格原点
@@ -60,6 +61,8 @@ protected:
 protected:
     bool _currentplayer;//true:black false:white
     bool _isPVP;
+    int _total;//记录当前棋子数
+    AI _AI;
 };
 
 
